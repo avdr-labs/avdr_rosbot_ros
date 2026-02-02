@@ -14,7 +14,6 @@
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, LogInfo
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import (
     EnvironmentVariable,
     LaunchConfiguration,
@@ -188,14 +187,8 @@ def generate_launch_description():
     )
 
     controller_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution(
-                [
-                    FindPackageShare("rosbot_controller"),
-                    "launch",
-                    "controller.launch.py",
-                ]
-            )
+        PathJoinSubstitution(
+            [FindPackageShare("rosbot_controller"), "launch", "controller.launch.py"]
         ),
         launch_arguments={
             "arm_activate": arm_activate,
@@ -211,10 +204,8 @@ def generate_launch_description():
     rosbot_utils = FindPackageShare("rosbot_utils")
 
     gz_components = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution(
-                [husarion_components_description, "launch", "gz_components.launch.py"]
-            )
+        PathJoinSubstitution(
+            [husarion_components_description, "launch", "gz_components.launch.py"]
         ),
         launch_arguments={
             "components_config_path": components_config,
@@ -222,21 +213,15 @@ def generate_launch_description():
     )
 
     joy_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([rosbot_joy, "launch", "joy.launch.py"])
-        )
+        PathJoinSubstitution([rosbot_joy, "launch", "joy.launch.py"])
     )
 
     localization_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([rosbot_localization, "launch", "ekf.launch.py"])
-        ),
+        PathJoinSubstitution([rosbot_localization, "launch", "ekf.launch.py"])
     )
 
     laser_filter_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([rosbot_utils, "launch", "laser_filter.launch.py"])
-        ),
+        PathJoinSubstitution([rosbot_utils, "launch", "laser_filter.launch.py"]),
         launch_arguments={"robot_model": robot_model}.items(),
     )
 

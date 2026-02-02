@@ -24,7 +24,6 @@ from launch.actions import (
 from launch.conditions import IfCondition, UnlessCondition
 from launch.event_handlers import OnProcessIO
 from launch.events import Shutdown
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import (
     EnvironmentVariable,
     LaunchConfiguration,
@@ -122,10 +121,8 @@ def generate_launch_description():
     )
 
     load_urdf = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution(
-                [FindPackageShare("rosbot_description"), "launch", "load_urdf.launch.py"]
-            )
+        PathJoinSubstitution(
+            [FindPackageShare("rosbot_description"), "launch", "load_urdf.launch.py"]
         ),
         launch_arguments={
             "configuration": configuration,
@@ -185,10 +182,8 @@ def generate_launch_description():
     )
 
     manipulator_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution(
-                [FindPackageShare("rosbot_controller"), "launch", "manipulator.launch.py"]
-            )
+        PathJoinSubstitution(
+            [FindPackageShare("rosbot_controller"), "launch", "manipulator.launch.py"]
         ),
         launch_arguments={
             "arm_activate": arm_activate,

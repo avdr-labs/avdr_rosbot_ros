@@ -19,7 +19,6 @@ from launch.actions import (
     SetEnvironmentVariable,
 )
 from launch.conditions import IfCondition
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import (
     LaunchConfiguration,
     PathJoinSubstitution,
@@ -47,10 +46,8 @@ def generate_launch_description():
     )
 
     gz_sim = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution(
-                [FindPackageShare("husarion_gz_worlds"), "launch", "gz_sim.launch.py"]
-            )
+        PathJoinSubstitution(
+            [FindPackageShare("husarion_gz_worlds"), "launch", "gz_sim.launch.py"]
         ),
         launch_arguments={"gz_log_level": "1"}.items(),
     )
@@ -76,26 +73,14 @@ def generate_launch_description():
     )
 
     spawn_robot = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution(
-                [
-                    FindPackageShare("rosbot_gazebo"),
-                    "launch",
-                    "spawn_robot.launch.py",
-                ]
-            )
-        ),
+        PathJoinSubstitution(
+            [FindPackageShare("rosbot_gazebo"), "launch", "spawn_robot.launch.py"]
+        )
     )
 
     rviz_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution(
-                [
-                    FindPackageShare("rosbot_description"),
-                    "launch",
-                    "rviz.launch.py",
-                ]
-            )
+        PathJoinSubstitution(
+            [FindPackageShare("rosbot_description"), "launch", "rviz.launch.py"]
         ),
         launch_arguments={"namespace": ""}.items(),
         condition=IfCondition(rviz),

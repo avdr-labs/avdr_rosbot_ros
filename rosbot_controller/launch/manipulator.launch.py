@@ -15,7 +15,6 @@
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, TimerAction
 from launch.conditions import IfCondition, UnlessCondition
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
@@ -56,17 +55,13 @@ def generate_launch_description():
     )
 
     move_group_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution(
-                [FindPackageShare("rosbot_moveit"), "launch", "move_group.launch.py"]
-            )
-        ),
+        PathJoinSubstitution(
+            [FindPackageShare("rosbot_moveit"), "launch", "move_group.launch.py"]
+        )
     )
 
     servo_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([FindPackageShare("rosbot_moveit"), "launch", "servo.launch.py"])
-        )
+        PathJoinSubstitution([FindPackageShare("rosbot_moveit"), "launch", "servo.launch.py"])
     )
 
     home_node = Node(package="rosbot_moveit", executable="home")

@@ -21,7 +21,6 @@ from launch.actions import (
     TimerAction,
 )
 from launch.conditions import IfCondition
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import (
     EnvironmentVariable,
     LaunchConfiguration,
@@ -63,15 +62,11 @@ def generate_launch_description():
     rosbot_utils = FindPackageShare("rosbot_utils")
 
     controller_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([rosbot_controller, "launch", "controller.launch.py"])
-        ),
+        PathJoinSubstitution([rosbot_controller, "launch", "controller.launch.py"])
     )
 
     microros_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([rosbot_bringup, "launch", "microros.launch.py"])
-        ),
+        PathJoinSubstitution([rosbot_bringup, "launch", "microros.launc.py"]),
         condition=IfCondition(microros),
         launch_arguments={
             "robot_model": robot_model,
@@ -79,22 +74,16 @@ def generate_launch_description():
     )
 
     localization_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([rosbot_localization, "launch", "ekf.launch.py"])
-        ),
+        PathJoinSubstitution([rosbot_localization, "launch", "ekf.launch.py"])
     )
 
     laser_filter_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([rosbot_utils, "launch", "laser_filter.launch.py"])
-        ),
+        PathJoinSubstitution([rosbot_utils, "launch", "laser_filter.launch.py"]),
         launch_arguments={"robot_model": robot_model}.items(),
     )
 
     joy_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([rosbot_joy, "launch", "joy.launch.py"])
-        )
+        PathJoinSubstitution([rosbot_joy, "launch", "joy.launch.py"])
     )
 
     green_color = "\033[92m"

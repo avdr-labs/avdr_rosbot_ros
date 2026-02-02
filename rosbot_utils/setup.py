@@ -48,8 +48,9 @@ setup(
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
-            "flash_firmware = rosbot_utils.flash_firmware:main",
             "create_config_dir = rosbot_utils.create_config_dir:main",
+            "flash_firmware = rosbot_utils.flash_firmware:main",
+            "configure_robot = rosbot_utils.configure_robot:main",
         ],
     },
 )

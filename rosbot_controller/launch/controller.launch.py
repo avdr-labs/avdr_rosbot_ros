@@ -139,33 +139,30 @@ def generate_launch_description():
         executable="ros2_control_node",
         parameters=[ns_controller_config],
         remappings=[
-            ("differential_drive_controller/cmd_vel", "cmd_vel"),
-            ("differential_drive_controller/odom", "odometry/wheels"),
+            ("differential_controller/cmd_vel", "cmd_vel"),
+            ("differential_controller/odom", "odometry/wheels"),
             (
-                "differential_drive_controller/transition_event",
-                "_differential_drive_controller/transition_event",
+                "differential_controller/transition_event",
+                "_differential_controller/transition_event",
             ),
-            ("imu_sensor_node/imu", "/_imu/data_raw"),
             ("imu_broadcaster/imu", "imu/data"),
             ("imu_broadcaster/transition_event", "_imu_broadcaster/transition_event"),
             (
                 "joint_state_broadcaster/transition_event",
                 "_joint_state_broadcaster/transition_event",
             ),
-            ("mecanum_drive_controller/cmd_vel", "cmd_vel"),
-            ("mecanum_drive_controller/odom", "odometry/wheels"),
+            ("mecanum_controller/cmd_vel", "cmd_vel"),
+            ("mecanum_controller/odom", "odometry/wheels"),
             (
-                "mecanum_drive_controller/transition_event",
-                "_mecanum_drive_controller/transition_event",
+                "mecanum_controller/transition_event",
+                "_mecanum_controller/transition_event",
             ),
-            ("~/motors_cmd", "/_motors_cmd"),
-            ("~/motors_response", "/_motors_response"),
         ],
         condition=UnlessCondition(use_sim),
     )
 
     drive_controller_name = PythonExpression(
-        ["'mecanum_drive_controller' if ", mecanum, " else 'differential_drive_controller'"]
+        ["'mecanum_controller' if ", mecanum, " else 'differential_controller'"]
     )
     controllers_spawner = Node(
         package="controller_manager",

@@ -79,9 +79,7 @@ def generate_launch_description():
     )
 
     rviz_launch = IncludeLaunchDescription(
-        PathJoinSubstitution(
-            [FindPackageShare("rosbot_description"), "launch", "rviz.launch.py"]
-        ),
+        PathJoinSubstitution([FindPackageShare("rosbot_description"), "launch", "rviz.launch.py"]),
         launch_arguments={"namespace": ""}.items(),
         condition=IfCondition(rviz),
     )

@@ -66,7 +66,7 @@ def generate_launch_description():
     )
 
     microros_launch = IncludeLaunchDescription(
-        PathJoinSubstitution([rosbot_bringup, "launch", "microros.launc.py"]),
+        PathJoinSubstitution([rosbot_bringup, "launch", "microros.launch.py"]),
         condition=IfCondition(microros),
         launch_arguments={
             "robot_model": robot_model,

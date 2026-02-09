@@ -55,9 +55,7 @@ def generate_launch_description():
     )
 
     move_group_launch = IncludeLaunchDescription(
-        PathJoinSubstitution(
-            [FindPackageShare("rosbot_moveit"), "launch", "move_group.launch.py"]
-        )
+        PathJoinSubstitution([FindPackageShare("rosbot_moveit"), "launch", "move_group.launch.py"])
     )
 
     servo_launch = IncludeLaunchDescription(

@@ -14,4 +14,4 @@ repositories:
   avdr_gz_worlds:
     type: git
     url: https://github.com/avdr-labs/avdr_gz_worlds
-    version: 99b80c8f958b96ec57151bf85bd7aa770b9a032e
+    version: d646e6b82cf4180f0af2d09afcafa3630b7ffbd6

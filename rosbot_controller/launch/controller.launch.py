@@ -46,6 +46,7 @@ def generate_launch_description():
     mecanum = LaunchConfiguration("mecanum")
     namespace = LaunchConfiguration("namespace")
     robot_model = LaunchConfiguration("robot_model")
+    start_moveit = LaunchConfiguration("start_moveit")
     use_sim = LaunchConfiguration("use_sim", default="False")
 
     config_search_path = PythonExpression(
@@ -68,6 +69,14 @@ def generate_launch_description():
         "arm_activate",
         default_value="False",
         description="Whether to activate the manipulator arm on startup.",
+        choices=["True", "False"],
+    )
+
+    declare_start_moveit_arg = DeclareLaunchArgument(
+        "start_moveit",
+        default_value="True",
+        description="Whether to launch MoveIt (move_group + servo). Set False to defer "
+        "starting the arm planner until it is actually needed (e.g. during manipulation).",
         choices=["True", "False"],
     )
 
@@ -193,6 +202,7 @@ def generate_launch_description():
         ),
         launch_arguments={
             "arm_activate": arm_activate,
+            "start_moveit": start_moveit,
         }.items(),
         condition=IfCondition(manipulator),
     )
@@ -223,6 +233,7 @@ def generate_launch_description():
     return LaunchDescription(
         [
             declare_arm_activate_arg,
+            declare_start_moveit_arg,
             declare_config_dir_arg,
             declare_configuration_arg,
             declare_manipulator_serial_port_arg,

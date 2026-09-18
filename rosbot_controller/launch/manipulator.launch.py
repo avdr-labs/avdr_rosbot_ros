@@ -23,6 +23,7 @@ from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
     arm_activate = LaunchConfiguration("arm_activate", default="True")
+    start_moveit = LaunchConfiguration("start_moveit", default="True")
 
     active_arm_controllers_spawner = Node(
         package="controller_manager",
@@ -61,6 +62,7 @@ def generate_launch_description():
                 [FindPackageShare("open_manipulator_x_moveit"), "launch", "move_group.launch.py"]
             )
         ),
+        condition=IfCondition(start_moveit),
     )
 
     servo_launch = IncludeLaunchDescription(
@@ -68,7 +70,8 @@ def generate_launch_description():
             PathJoinSubstitution(
                 [FindPackageShare("open_manipulator_x_moveit"), "launch", "servo.launch.py"]
             )
-        )
+        ),
+        condition=IfCondition(start_moveit),
     )
 
     home_node = Node(package="open_manipulator_x_moveit", executable="home")

@@ -74,6 +74,19 @@ def generate_launch_description():
         condition=IfCondition(start_moveit),
     )
 
+    # In deferred mode (start_moveit:=False) move_group is not launched here;
+    # instead this supervisor stands ready to start/stop it on demand over DDS
+    # (services /moveit_supervisor/{start,stop}), so an orchestrator can bring
+    # MoveIt up only for the brief arm-planning windows. Mutually exclusive with
+    # move_group_launch above so the two never both own move_group.
+    moveit_supervisor = Node(
+        package="rosbot_controller",
+        executable="moveit_supervisor",
+        name="moveit_supervisor",
+        output="screen",
+        condition=UnlessCondition(start_moveit),
+    )
+
     home_node = Node(package="open_manipulator_x_moveit", executable="home")
     move_to_home_pose = TimerAction(
         period=10.0, actions=[home_node], condition=IfCondition(arm_activate)
@@ -85,6 +98,7 @@ def generate_launch_description():
             inactive_arm_controllers_spawner,
             move_group_launch,
             servo_launch,
+            moveit_supervisor,
             move_to_home_pose,
         ]
     )

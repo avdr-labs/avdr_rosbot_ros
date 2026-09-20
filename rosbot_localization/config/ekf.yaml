@@ -4,7 +4,11 @@
   # Ref: http://docs.ros.org/en/noetic/api/robot_localization/html/state_estimation_nodes.html
   ekf_node:
     ros__parameters:
-      frequency: 20.0
+      # 10 Hz (was 20). The filter was overrunning its 50 ms budget under load on
+      # the Orin (jitter pushed cycles to ~67 ms -> "Failed to meet update rate").
+      # 10 Hz gives a 100 ms budget, comfortably above the worst observed cycle,
+      # and is still 2x the nav2 controller rate (5 Hz), so navigation loses nothing.
+      frequency: 10.0
       sensor_timeout: 0.05
       two_d_mode: true
 

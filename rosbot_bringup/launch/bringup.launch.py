@@ -36,11 +36,20 @@ def generate_launch_description():
     microros = LaunchConfiguration("microros")
     namespace = LaunchConfiguration("namespace")
     robot_model = LaunchConfiguration("robot_model")
+    start_moveit = LaunchConfiguration("start_moveit")
 
     declare_arm_activate_arg = DeclareLaunchArgument(
         "arm_activate",
         default_value="False",
         description="Whether to activate the manipulator arm on startup.",
+        choices=["True", "False"],
+    )
+
+    declare_start_moveit_arg = DeclareLaunchArgument(
+        "start_moveit",
+        default_value="True",
+        description="Whether to launch MoveIt (move_group + servo) on startup. Set False to "
+        "defer the arm planner until it is actually needed (e.g. during manipulation).",
         choices=["True", "False"],
     )
 
@@ -76,6 +85,7 @@ def generate_launch_description():
         ),
         launch_arguments={
             "arm_activate": arm_activate,
+            "start_moveit": start_moveit,
         }.items(),
     )
 
@@ -118,6 +128,7 @@ def generate_launch_description():
 
     actions = [
         declare_arm_activate_arg,
+        declare_start_moveit_arg,
         declare_microros_arg,
         declare_namespace_arg,
         declare_robot_model_arg,

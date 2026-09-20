@@ -45,6 +45,7 @@ setup(
     entry_points={
         "console_scripts": [
             "arm_control = rosbot_controller.arm_control:main",
+            "moveit_supervisor = rosbot_controller.moveit_supervisor:main",
         ],
     },
 )
